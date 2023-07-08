@@ -3,6 +3,7 @@ package com.noticeme.model;
 import com.noticeme.common.DateTimeConverter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Benachrichtigung extends Note {
 
@@ -35,5 +36,17 @@ public class Benachrichtigung extends Note {
 
     public String getNotifyWhenAsString() {
         return notifyWhen.format(DateTimeConverter.DATE_TIME_FORMATTER);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Benachrichtigung other = (Benachrichtigung) obj;
+        return Objects.equals(this.notifyWhen, other.notifyWhen);
     }
 }

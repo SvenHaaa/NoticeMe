@@ -14,4 +14,5 @@ module com.noticeme {
 
     exports com.noticeme;
     exports com.noticeme.controller;
+    opens com.noticeme.common to javafx.base;
 }

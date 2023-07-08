@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.layout.FlowPane?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.noticeme.controller.MainController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.noticeme.controller.MainController">
     <children>
         <MenuBar>
             <menus>
-                <Menu mnemonicParsing="false" text="Dummy">
+                <Menu mnemonicParsing="false" text="Testdata">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Dummy">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#onInsertTestData" text="insert" />
+                  <MenuItem mnemonicParsing="false" onAction="#onDeleteTestdata" text="remove" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="more">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onAbout" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRefresh" text="refresh" />
+                  <MenuItem mnemonicParsing="false" onAction="#onAbout" text="About" />
                     </items>
                 </Menu>
             </menus>

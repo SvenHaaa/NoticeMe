@@ -123,13 +123,15 @@ public class Note {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Note)){
             return false;
         }
         Note other = (Note) obj;
-        return Objects.equals(this.title, other.title) && Objects.equals(this.date, other.date) && Objects.equals(this.notiz, other.notiz) && Objects.equals(this.where, other.where);
+
+
+        return Objects.equals(this.title, other.title)
+                && Objects.equals(this.date, other.date)
+                && Objects.equals(this.notiz, other.notiz)
+                && Objects.equals(this.where, other.where);
     }
 }

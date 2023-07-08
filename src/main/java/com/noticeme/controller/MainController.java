@@ -2,6 +2,8 @@ package com.noticeme.controller;
 
 import com.noticeme.NoticeMeApplication;
 import com.noticeme.common.DateTimeConverter;
+import com.noticeme.common.Testdatagenerator;
+import com.noticeme.db.NoteRepository;
 import com.noticeme.model.Benachrichtigung;
 import com.noticeme.model.Note;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,11 +18,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -45,19 +42,18 @@ public class MainController implements Initializable {
     @FXML
     private Button btnNeu;
 
+    private boolean hasTestDaten;
+    private NoteRepository noteRepository;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initTestdaten();
-
+        hasTestDaten = false;
+        noteRepository = new NoteRepository();
         initTabelle();
     }
 
-    private void initTestdaten() {
-        List<Note> no = new ArrayList<>();
-        Collections.addAll(no, new Note("Testtitel", "Testnote", LocalDateTime.now(), "daheim"),
-                new Note("Leernote", "Leertitel", LocalDateTime.of(2021, Month.MARCH, 3, 4, 5)),
-                new Benachrichtigung("Benachrichtigung", "Notiz", LocalDateTime.now(), "wo", LocalDateTime.of(2022, Month.MARCH, 5, 4, 3)));
-        tvNotes.getItems().addAll(no);
+    private void init() {
+        //todo getDatabase contents
     }
 
     private void initTabelle() {
@@ -73,6 +69,7 @@ public class MainController implements Initializable {
         tiWhere.setCellValueFactory(new PropertyValueFactory<>("where"));
         tiNotify.setCellValueFactory(cell -> {
             String notifyCellOutput = "nein";
+            //ignore warning to replace with nullcheck, invocation of instanceof is necessary here
             if (cell.getValue() instanceof Benachrichtigung) {
                 Benachrichtigung benachrichtigung = (Benachrichtigung) cell.getValue();
                 notifyCellOutput = DateTimeConverter.getConverted(benachrichtigung.getNotifyWhen());
@@ -150,5 +147,25 @@ public class MainController implements Initializable {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
+    }
+
+    public void onInsertTestData(ActionEvent actionEvent) {
+        if (!hasTestDaten) {
+            tvNotes.getItems().addAll(Testdatagenerator.generateTestDaten());
+            hasTestDaten = true;
+        }
+
+    }
+
+    public void onDeleteTestdata(ActionEvent actionEvent) {
+        if (hasTestDaten) {
+            tvNotes.getItems().removeAll(Testdatagenerator.generateTestDaten());
+            hasTestDaten = false;
+        }
+    }
+
+    public void onRefresh(ActionEvent actionEvent) {
+        tvNotes.getItems().clear();
+        tvNotes.getItems().addAll(noteRepository.findAll());
     }
 }
